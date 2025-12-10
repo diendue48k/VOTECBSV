@@ -3,23 +3,27 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd()); // load .env
+  const env = loadEnv(mode, process.cwd(), '');
 
   return {
-    base: '/VOTECBSV/', // ⭐ BẮT BUỘC khi deploy trên GitHub Pages
-    server: {
-      port: 3000,
-      host: '0.0.0.0',
-    },
+    base: '/VOTECBSV2025/', // ⚠ SỬA THEO TÊN REPO CỦA BẠN
+
     plugins: [react()],
+
     define: {
-      __API_KEY__: JSON.stringify(env.VITE_API_KEY),
-      __GEMINI_KEY__: JSON.stringify(env.VITE_GEMINI_API_KEY)
+      // ⚠ KHÔNG DÙNG process.env KHI BUILD TRÊN GITHUB PAGES
+      GEMINI_API_KEY: JSON.stringify(env.GEMINI_API_KEY)
     },
+
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './'),
       }
+    },
+
+    server: {
+      port: 3000,
+      host: '0.0.0.0',
     }
   };
 });
